@@ -4,6 +4,30 @@
 
 pageextension 50100 CustomerListExt extends "Customer List"
 {
+
+    actions
+    {
+        addlast("&Customer")
+        {
+            action(ExportCustomer)
+            {
+                ApplicationArea = All;
+
+                trigger OnAction()
+                begin
+                    //* Fields to Export
+                    // Rec.Name
+                    // Rec."Name 2"
+                    // Rec.Address
+                    // Rec."Address 2"
+                    // Rec."Post Code"
+                    // rec."Phone No."
+                    // rec."Mobile Phone No."
+                end;
+            }
+        }
+    }
+
     trigger OnOpenPage();
     var
         Choice: Integer;
@@ -17,6 +41,8 @@ pageextension 50100 CustomerListExt extends "Customer List"
         //     Message('Your Choice %1', Result);
         // end;
     end;
+
+
 
     // procedure GenericStrMenu(var Choice: Integer; Choices: Text) OK: Boolean
     // var
