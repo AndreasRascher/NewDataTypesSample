@@ -1,4 +1,4 @@
-codeunit 50100 ExportTableCSV
+codeunit 50100 ExportTableCSV implements IExportTable
 {
     #region Settings
     ///<summary> collect field IDs by table</summary>

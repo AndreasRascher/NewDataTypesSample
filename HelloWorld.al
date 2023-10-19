@@ -15,10 +15,10 @@ pageextension 50100 CustomerListExt extends "Customer List"
                 trigger OnAction()
                 var
                     IExportTable: Interface IExportTable;
-                    ExportTableMgt: Codeunit ExportTableMgt;
+                    // ExportTableMgt: Codeunit ExportTableMgt;
                     ExportFileContent: TextBuilder;
                 begin
-                    IExportTable := ExportTableMgt.GetDefaultJSONImplementation();
+                    // IExportTable := ExportTableMgt.GetDefaultJSONImplementation();
                     IExportTable.AddExportField(Rec.RecordId.TableNo, Rec.fieldNo(Name));
                     IExportTable.AddExportField(Rec.RecordId.TableNo, Rec.fieldNo("Name 2"));
                     IExportTable.AddExportField(Rec.RecordId.TableNo, Rec.fieldNo(Address));
@@ -33,7 +33,6 @@ pageextension 50100 CustomerListExt extends "Customer List"
             }
         }
     }
-}
 
     trigger OnOpenPage();
     var
