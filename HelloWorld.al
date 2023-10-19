@@ -4,7 +4,6 @@
 
 pageextension 50100 CustomerListExt extends "Customer List"
 {
-
     actions
     {
         addlast("&Customer")
@@ -14,19 +13,27 @@ pageextension 50100 CustomerListExt extends "Customer List"
                 ApplicationArea = All;
 
                 trigger OnAction()
+                var
+                    IExportTable: Interface IExportTable;
+                    ExportTableMgt: Codeunit ExportTableMgt;
+                    ExportFileContent: TextBuilder;
                 begin
-                    //* Fields to Export
-                    // Rec.Name
-                    // Rec."Name 2"
-                    // Rec.Address
-                    // Rec."Address 2"
-                    // Rec."Post Code"
-                    // rec."Phone No."
-                    // rec."Mobile Phone No."
+                    IExportTable := ExportTableMgt.GetDefaultJSONImplementation();
+                    IExportTable.AddExportField(Rec.RecordId.TableNo, Rec.fieldNo(Name));
+                    IExportTable.AddExportField(Rec.RecordId.TableNo, Rec.fieldNo("Name 2"));
+                    IExportTable.AddExportField(Rec.RecordId.TableNo, Rec.fieldNo(Address));
+                    IExportTable.AddExportField(Rec.RecordId.TableNo, Rec.fieldNo("Address 2"));
+                    IExportTable.AddExportField(Rec.RecordId.TableNo, Rec.fieldNo("Post Code"));
+                    IExportTable.AddExportField(Rec.RecordId.TableNo, rec.fieldNo("Phone No."));
+                    IExportTable.AddExportField(Rec.RecordId.TableNo, rec.fieldNo("Mobile Phone No."));
+                    IExportTable.AddRecord(Rec);
+                    if IExportTable.GetContent(ExportFileContent) then
+                        ExportTableMgt.DownloadContent(ExportFileContent, 'Export.txt');
                 end;
             }
         }
     }
+}
 
     trigger OnOpenPage();
     var
