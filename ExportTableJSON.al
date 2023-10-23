@@ -1,9 +1,5 @@
 codeunit 50102 ExportTableJSON implements IExportTable
 {
-    ///<summary> collect field IDs by table</summary>
-
-
-    ///<summary> writes the defined fields to the export content </summary>
     procedure AddRecord(RecVariant: Variant)
     var
         rRef: RecordRef;
@@ -13,6 +9,7 @@ codeunit 50102 ExportTableJSON implements IExportTable
     begin
         // variant -> recordRef
         rRef.GetTable(RecVariant);
+        CheckTableHasExportFields(rRef.Number);
 
         // collect & convert values
         foreach fieldNo in ExportFieldsGlobal.Get(rRef.Number) do begin
@@ -21,6 +18,34 @@ codeunit 50102 ExportTableJSON implements IExportTable
         end;
         // add line to output
         JRecords.Add(JRecord);
+    end;
+
+    procedure AddExportField(tableID: Integer; fieldNo: Integer)
+    var
+        fieldNumbers: List of [Integer];
+    begin
+        if not ExportFieldsGlobal.ContainsKey(tableID) then begin
+            fieldNumbers.Add(fieldNo);
+            ExportFieldsGlobal.Add(tableID, fieldNumbers);
+        end else begin
+            ExportFieldsGlobal.Get(tableID, fieldNumbers);
+            fieldNumbers.Add(fieldNo);
+        end;
+    end;
+
+    procedure CheckTableHasExportFields(tableID: Integer)
+    begin
+        if not ExportFieldsGlobal.ContainsKey(tableID) then
+            Error('%1 has no fields defined', tableID);
+    end;
+
+    procedure GetContent(var Content: TextBuilder) hasContent: Boolean;
+    var
+        JSONAsText: Text;
+    begin
+        JRecords.WriteTo(JSONAsText);
+        Content.Append(JSONAsText);
+        hasContent := JSONAsText <> '';
     end;
 
     local procedure GetJsonFieldName(FRef: FieldRef): Text
@@ -83,35 +108,6 @@ codeunit 50102 ExportTableJSON implements IExportTable
                     JValue.SetValue(G);
                 end;
         end;
-    end;
-
-    procedure AddExportField(tableID: Integer; fieldNo: Integer)
-    var
-        fieldNumbers: List of [Integer];
-    begin
-        if not ExportFieldsGlobal.ContainsKey(tableID) then begin
-            fieldNumbers.Add(fieldNo);
-            ExportFieldsGlobal.Add(tableID, fieldNumbers);
-        end else begin
-            ExportFieldsGlobal.Get(tableID, fieldNumbers);
-            fieldNumbers.Add(fieldNo);
-        end;
-
-    end;
-
-    procedure CheckTableHasExportFields(tableID: Integer)
-    begin
-        if not ExportFieldsGlobal.ContainsKey(tableID) then
-            Error('%1 has no fields defined', tableID);
-    end;
-
-    procedure GetContent(var Content: TextBuilder) hasContent: Boolean;
-    var
-        JSONAsText: Text;
-    begin
-        JRecords.WriteTo(JSONAsText);
-        Content.Append(JSONAsText);
-        hasContent := JSONAsText <> '';
     end;
 
     var
