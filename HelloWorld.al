@@ -18,6 +18,7 @@ pageextension 50100 CustomerListExt extends "Customer List"
                     ExportTableMgt: Codeunit ExportTableMgt;
                     ExportFileContent: TextBuilder;
                 begin
+                    // IExportTable := ExportTableMgt.GetDefaultJSONImplementation();
                     IExportTable := ExportTableMgt.GetDefaultJSONImplementation();
                     IExportTable.AddExportField(Rec.RecordId.TableNo, Rec.fieldNo(Name));
                     IExportTable.AddExportField(Rec.RecordId.TableNo, Rec.fieldNo("Name 2"));

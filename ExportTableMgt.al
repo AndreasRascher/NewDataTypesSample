@@ -9,8 +9,10 @@ codeunit 50101 ExportTableMgt
     end;
 
     internal procedure GetDefaultJSONImplementation() ExportTable: interface IExportTable
+    var
+        ExportTableJSON: Codeunit ExportTableJSON;
     begin
-        Error('TBD');
+        ExportTable := ExportTableJSON;
     end;
 
     procedure DownloadContent(Content: TextBuilder; toFileName: Text)
