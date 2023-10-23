@@ -26,6 +26,7 @@ pageextension 50100 CustomerListExt extends "Customer List"
                     IExportTable.AddExportField(Rec.RecordId.TableNo, Rec.fieldNo("Post Code"));
                     IExportTable.AddExportField(Rec.RecordId.TableNo, rec.fieldNo("Phone No."));
                     IExportTable.AddExportField(Rec.RecordId.TableNo, rec.fieldNo("Mobile Phone No."));
+                    IExportTable.SetProperty('SEPARATOR', '|');
                     IExportTable.AddRecord(Rec);
                     if IExportTable.GetContent(ExportFileContent) then
                         ExportTableMgt.DownloadContent(ExportFileContent, 'Export.txt');
