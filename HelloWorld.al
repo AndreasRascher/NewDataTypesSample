@@ -1,6 +1,10 @@
-// Welcome to your new AL extension.
-// Remember that object names and IDs should be unique across all extensions.
-// AL snippets start with t*, like tpageext - give them a try and happy coding!
+// Anforderung:
+// - Tabellendaten exportieren
+// - Erweiterbar
+// - Umsetzung in CSV
+// - Umsetzung in JSON
+// - Weitere Export Formate sollen leicht zu integrieren sein
+//   -> Interface (Trennung von Umsetzung und Absicht)
 
 pageextension 50100 CustomerListExt extends "Customer List"
 {
