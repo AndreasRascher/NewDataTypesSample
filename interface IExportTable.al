@@ -14,7 +14,7 @@ interface IExportTable
     ///</item>
     ///</list>
     /// </summary>
-    procedure SetProperty(name: Text; value: Text);
+    procedure SetProperty(propertyName: Text; propertyValue: Text)
     procedure GetContent(var Content: TextBuilder): Boolean;
 
 }
